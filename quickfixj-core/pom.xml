@@ -55,6 +55,11 @@
             <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-client-hotrod</artifactId>
+            <version>13.0.2.Final</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.mina</groupId>
