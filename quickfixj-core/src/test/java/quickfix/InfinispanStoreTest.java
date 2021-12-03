@@ -19,26 +19,25 @@
 
 package quickfix;
 
-import java.io.File;
-import java.io.IOException;
+import java.net.URL;
 
 public class InfinispanStoreTest extends AbstractMessageStoreTest {
-    protected MessageStoreFactory getMessageStoreFactory() throws ConfigError, FieldConvertError {
+
+    protected MessageStoreFactory getMessageStoreFactory() throws ConfigError {
         SessionSettings settings = new SessionSettings(getConfigurationFileName());
-        File tmpfile;
-        try {
-            tmpfile = File.createTempFile("test", "txt");
-        } catch (IOException e) {
-            throw new ConfigError(e);
-        }
-        File tmpdir = tmpfile.getParentFile();
+        URL resource = getClass().getClassLoader().getResource("hotrod-client.properties");
         settings.setString(getSessionID(), InfinispanStoreFactory.SETTING_INFINISPAN_HOT_ROD_CLIENT_PROPERTIES_PATH,
-                tmpdir.getPath());
+                resource.getPath());
         return new InfinispanStoreFactory(settings);
     }
 
     protected Class<?> getMessageStoreClass() {
         return InfinispanStore.class;
+    }
+
+    @Override
+    public void testRefreshMessageStore() throws Exception {
+        // DO nothing. There's no refresh needed.
     }
 
 }
